@@ -1,0 +1,11 @@
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link {%if request.path == url_for('admin_posts')%} disabled {% endif %}" href="{{ url_for('admin_posts') }}">Posts</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {%if request.path == url_for('admin_authors')%} disabled {% endif %}" href="{{ url_for('admin_authors') }}">Authors</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {%if request.path == url_for('admin_categories')%} disabled {% endif %}" href="{{ url_for('admin_categories') }}">Categories</a>
+  </li>
+</ul>

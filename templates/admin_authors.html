@@ -1,0 +1,74 @@
+{% extends './base.html' %} {% block title %}Admin - Blog Example{% endblock %}
+{% block body %}
+<main class="container">
+  <div class="row">
+    <div class="sidebar col-12 col-md-4">
+      {% include "./block/admin_sidebar.html" %}
+    </div>
+    <div class="admin-content col-12 col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Author Name</th>
+            <th scope="col">Author Surname</th>
+            
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+            <tr>
+              <th scope="row">{{ author.id }}</th>
+              <td>{{ author.first_name }}</td>
+              <td>{{ author.last_name }}</td>
+            <td>
+              <a
+                href="{{ url_for('admin_author_edit', author_id=author.id) }}"
+                class="btn btn-primary"
+              >Edit</a>
+              
+              <a
+                data-delete-url="{{ url_for('admin_author_delete', author_id=author.id) }}"
+                class="btn btn-danger"
+              >
+                <svg
+                  class="bi bi-trash-fill"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.5 1a1 1 0 00-1 1v1a1 1 0 001 1H3v9a2 2 0 002 2h6a2 2 0 002-2V4h.5a1 1 0 001-1V2a1 1 0 00-1-1H10a1 1 0 00-1-1H7a1 1 0 00-1 1H2.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM8 5a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 018 5zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{{ url_for('admin_create_new_author') }}" class='btn btn-outline-primary'>Create new author</a>
+     
+    </div>
+  </div>
+</main>
+<script src="/static/del_btn.js"></script>
+{% endblock%}
+            
+            
+
+
+
+
+
+
+
+
+
+
+

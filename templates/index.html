@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+
+{% block title %}Blog Example - Main Page{% endblock %}
+
+{% block top %}
+    {% include "./block/jumbotron.html" %}
+      <div class="row mb-2">
+        {% for post in first_posts %}
+          <div class="col-md-6">
+              {% include "./block/full_post_card.html" %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+    <main class="container">
+      <div class="row">
+        <div class="col-md-8 blog-main">
+          <h3 class="pb-4 mb-4 font-italic border-bottom">
+            From the Firehose
+          </h3>
+          {% for post in posts %}
+              {% include "./block/post.html" %}
+          {% endfor %}
+          {% include "./block/blog_pagination.html" %}
+        </div>
+        {% include "./block/blog_sidebar.html" %}
+      </div>
+    </main>
+{% endblock%}

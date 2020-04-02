@@ -1,0 +1,10 @@
+<div class="blog-post">
+  <h2 class="blog-post-title">
+    <a href="{{ url_for('post_page', post_id=post.id) }}">{{ post.title }}</a>
+  </h2>
+  <p class="blog-post-meta">
+    {{ post.create_at.strftime("%d. %B %Y") }} by
+    <a href="#">{{ post.author_first_name }} {{ post.author_last_name }}</a>
+  </p>
+  {{post.body}}
+</div>

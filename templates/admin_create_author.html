@@ -1,0 +1,25 @@
+{% extends './base.html' %} {% block title %}Admin - Blog Example{% endblock %}
+{% block body %}
+<main class="container">
+  <div class="row">
+    <div class="sidebar col-12 col-md-4">
+      {% include "./block/admin_sidebar.html" %}
+    </div>
+    <div class="admin-content col-12 col-md-8">
+        <form method="POST">
+            <div class="form-group">
+              <label for="first_name">Name</label>
+              <input class="form-control" id="first_name" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Surname</label>
+                <textarea class="form-control" id="last_name" name="last_name"></textarea>
+            </div>
+            
+            
+            <button type="submit" class="btn btn-success">Create new author</button>
+          </form>
+    </div>
+  </div>
+</main>
+{% endblock%}

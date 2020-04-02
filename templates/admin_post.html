@@ -1,0 +1,39 @@
+{% extends './base.html' %} {% block title %}Admin - Blog Example{% endblock %}
+{% block body %}
+<main class="container">
+  <div class="row">
+    <div class="sidebar col-12 col-md-4">
+      {% include "./block/admin_sidebar.html" %}
+    </div>
+    <div class="admin-content col-12 col-md-8">
+        <form method="POST">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input class="form-control" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="body">Body</label>
+                <textarea class="form-control" id="body" name="body"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category_id">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <select id="author" name="author_id">
+                    {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-info">Create new post</button>
+          </form>
+    </div>
+  </div>
+</main>
+{% endblock%}

@@ -1,0 +1,22 @@
+{% extends './base.html' %} {% block title %}Admin - Blog Example{% endblock %}
+{% block body %}
+<main class="container">
+  <div class="row">
+    <div class="sidebar col-12 col-md-4">
+      {% include "./block/admin_sidebar.html" %}
+    </div>
+    <div class="admin-content col-12 col-md-8">
+        <form method="POST">
+            <div class="form-group">
+              <label for="title">Category Title</label>
+              <input class="form-control" id="title" name="title">
+            </div>
+            
+            
+            
+            <button type="submit" class="btn btn-success">Create new category</button>
+          </form>
+    </div>
+  </div>
+</main>
+{% endblock%}
