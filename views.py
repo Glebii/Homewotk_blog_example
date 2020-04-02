@@ -1,5 +1,11 @@
-from flask import render_template, url_for, redirect, request , abort, current_app
-from services import PostsService, CategoriesService, AuthorsService , UsersService , SessionsService
+from flask import render_template, url_for, redirect, request, abort, current_app
+from services import (
+    PostsService,
+    CategoriesService,
+    AuthorsService,
+    UsersService,
+    SessionsService,
+)
 
 
 def index_page():
@@ -40,6 +46,7 @@ def author_page(author_id):
     author_posts = PostsService.get_all_posts_by_author(author_id)
     return render_template("author.html", author=author, author_posts=author_posts)
 
+
 # ADMIN ------------------------------------------------------------------------------------------------------
 # Для ПОСТОВ ------------------------------------------------------------------------------------------------:
 def admin_posts():
@@ -62,6 +69,8 @@ def admin_post_new():
             request.form.get("body"),
         )
         return redirect(url_for("admin_posts"))
+
+
 def admin_post_edit(post_id: int):
     categories = CategoriesService.get_all_categories()
     authors = AuthorsService.get_all_authors()
@@ -81,42 +90,44 @@ def admin_post_edit(post_id: int):
             request.form.get("body"),
         )
         return redirect(url_for("admin_posts"))
+
+
 def admin_posts_delete(post_id: int):
     PostsService.delete_pots_by_id(post_id)
     return redirect(url_for("admin_posts"))
 
-#Для Категорий ----------------------------------------------------------------------------------------------:
+
+# Для Категорий ----------------------------------------------------------------------------------------------:
 def admin_categories():
     categories = CategoriesService.get_all_categories()
     return render_template("admin_categories.html", categories=categories)
+
+
 def admin_category_delete(category_id: int):
     CategoriesService.delete_cat_by_id(category_id)
     return redirect(url_for("admin_categories"))
+
+
 def admin_create_new_category():
     if request.method == "GET":
         return render_template("admin_create_category.html")
     elif request.method == "POST":
-        created_category = CategoriesService.create_new_cat(
-            request.form.get("title"),
-        )
+        created_category = CategoriesService.create_new_cat(request.form.get("title"),)
         return redirect(url_for("admin_categories"))
+
+
 def admin_category_edit(category_id: int):
     category = CategoriesService.get_category_by_id(category_id)
-    
+
     if request.method == "GET":
         # Отрендерить шаблон admin_post.html для редактирования существующего поста
-        return render_template(
-            "admin_category_edit.html", category=category
-        )
+        return render_template("admin_category_edit.html", category=category)
     elif request.method == "POST":
         # Редактируем существующий пост
         edited_category = CategoriesService.edit_category_by_id(
-            category_id,
-            request.form.get("title")
+            category_id, request.form.get("title")
         )
         return redirect(url_for("admin_categories"))
-
-
 
 
 
@@ -124,36 +135,39 @@ def admin_category_edit(category_id: int):
 def admin_authors():
     authors = AuthorsService.get_all_authors()
     return render_template("admin_authors.html", authors=authors)
-def admin_author_delete(author_id:int):
+
+
+def admin_author_delete(author_id: int):
     AuthorsService.delete_author_by_id(author_id)
     return redirect(url_for("admin_authors"))
+
+
 def admin_create_new_author():
     if request.method == "GET":
         return render_template("admin_create_author.html")
     elif request.method == "POST":
         created_author = AuthorsService.create_new_author(
-            request.form.get("first_name"),
-            request.form.get("last_name"),
-        )
-        return redirect(url_for("admin_authors"))
-def admin_author_edit(author_id: int):
-    author = AuthorsService.get_author_by_id(author_id)
-    
-    if request.method == "GET":
-        # Отрендерить шаблон admin_post.html для редактирования существующего поста
-        return render_template(
-            "admin_author_edit.html", author=author
-        )
-    elif request.method == "POST":
-        # Редактируем существующий пост
-        edited_author = AuthorsService.edit_author_by_id(
-            author_id,
-            request.form.get("first_name"),
-            request.form.get("last_name"),
+            request.form.get("first_name"), request.form.get("last_name"),
         )
         return redirect(url_for("admin_authors"))
 
-#User
+
+def admin_author_edit(author_id: int):
+    author = AuthorsService.get_author_by_id(author_id)
+
+    if request.method == "GET":
+        # Отрендерить шаблон admin_post.html для редактирования существующего поста
+        return render_template("admin_author_edit.html", author=author)
+    elif request.method == "POST":
+        # Редактируем существующий пост
+        edited_author = AuthorsService.edit_author_by_id(
+            author_id, request.form.get("first_name"), request.form.get("last_name"),
+        )
+        return redirect(url_for("admin_authors"))
+
+
+# User
+
 
 def login():
     if request.method == "GET":
@@ -167,17 +181,17 @@ def login():
         st = request.cookies.get(current_app.config.get("SESSION_COOKIE"))
         SessionsService.attach_user(st, user.id)
         return redirect(url_for("index_page"))
-#Регистрация роутов--------------------------------------------------------------------------------------------:
+
+
+# Регистрация роутов--------------------------------------------------------------------------------------------:
 def register_views(app):
     app.route("/")(index_page)
     app.route("/post/<int:post_id>")(post_page)
     app.route("/category/<int:category_id>")(category_page)
     app.route("/author/<int:author_id>")(author_page)
-    # ADMIN ----- Посты 
+    # ADMIN ----- Посты
     app.route("/admin/")(admin_posts)  # Posts list
-    app.route("/admin/post/<int:post_id>", methods=["DELETE"])(
-        admin_posts_delete
-    )  
+    app.route("/admin/post/<int:post_id>", methods=["DELETE"])(admin_posts_delete)
     app.route("/admin/post/new", methods=["GET", "POST"])(admin_post_new)  # New post
     app.route("/admin/edit/post/<int:post_id>", methods=["GET", "POST"])(
         admin_post_edit
@@ -191,16 +205,14 @@ def register_views(app):
     app.route("/admin/edit/category/<int:category_id>", methods=["GET", "POST"])(
         admin_category_edit
     )
-    # ADMIN ------ Авторы 
+    # ADMIN ------ Авторы
     app.route("/admin/all authors/")(admin_authors)
-    app.route("/admin/author/<int:author_id>" ,methods=["DELETE"])(
-        admin_author_delete
-    )
+    app.route("/admin/author/<int:author_id>", methods=["DELETE"])(admin_author_delete)
     app.route("/admin/author/new", methods=["GET", "POST"])(admin_create_new_author)
     app.route("/admin/edit/author/<int:author_id>", methods=["GET", "POST"])(
         app.route("/admin/edit/author/<int:author_id>", methods=["GET", "POST"])(
-        admin_author_edit
+            admin_author_edit
+        )
     )
-    )
-    #user
+
     app.route("/login", methods=["GET", "POST"])(login)
