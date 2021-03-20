@@ -4,7 +4,7 @@ configobj==5.0.6
 Flask==1.1.1
 humanize==2.1.0
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 pgcli==2.2.0
 pgspecial==1.11.9
